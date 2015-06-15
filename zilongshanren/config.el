@@ -343,13 +343,7 @@
 ;;http://www.howardism.org/Technical/Emacs/journaling-org.html
 ;;add multi-file journal
 (setq org-capture-templates
-      '(("n" "notes" entry (file+headline "~/org-notes/notes.org" "Quick notes")
-         "* %?\n  %i\n %U"
-         :empty-lines 1)
-        ("e" "emacs" entry (file+headline "~/org-notes/emacs.org" "Quick notes")
-         "* %? \n %(zilongshanren/retrieve-chrome-current-tab-url)\n %U\n "
-         :empty-lines 1)
-        ("t" "Todo" entry (file+headline "~/org-notes/gtd.org" "Daily Tasks")
+      '(("t" "Todo" entry (file+headline "~/org-notes/gtd.org" "Daily Tasks")
 	 "* TODO %?\n  %i\n"
          :empty-lines 1)
         ("w" "Todo" entry (file+headline "~/org-notes/gtd.org" "Weekly Tasks")
@@ -357,33 +351,4 @@
          :empty-lines 1)
         ("m" "Todo" entry (file+headline "~/org-notes/gtd.org" "Monthly Tasks")
 	 "* TODO %?\n  %i\n"
-         :empty-lines 1)
-        ("j" "Journal Entry"
-         entry (file+datetree "~/org-notes/journal.org")
-         "* %?"
-         :empty-lines 1)
-	))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-custom-commands nil)
- '(org-agenda-files (quote ("~/org-notes/gtd.org"
-                            "~/org-notes/emacs.org"
-                            "~/org-notes/cocos2d-x.org"
-                            "~/org-notes/notes.org"
-                            "~/org-notes/learning.org"
-                            "~/org-notes/vim.org"
-                            "~/org-notes/journal.org"
-                            )))
- '(org-agenda-ndays 1)
- '(org-agenda-show-all-dates t)
- '(org-agenda-skip-deadline-if-done t)
- '(org-agenda-skip-scheduled-if-done t)
- '(org-agenda-skip-deadline-prewarning-if-scheduled t)
- '(org-agenda-start-on-weekday nil)
- '(org-deadline-warning-days 14)
- '(org-fast-tag-selection-single-key (quote expert))
- '(org-reverse-note-order t))
+         :empty-lines 1)))
