@@ -34,7 +34,7 @@
       org-octopress
       impatient-mode
       ;; moz-controller
-      youdao-dictionary
+      ;; youdao-dictionary
       helm-github-stars
       elfeed
       swiper
@@ -73,7 +73,9 @@
   (use-package discover-my-major
     :defer t
     :init
-    (evil-leader/set-key (kbd "mhm") 'discover-my-major)))
+    (progn
+      (evil-leader/set-key (kbd "mhm") 'discover-my-major)
+      (evilify makey-key-mode makey-key-mode-get-key-map))))
 
 (defun zilongshanren/init-lispy()
   "Initialize lispy"
@@ -93,8 +95,15 @@
   (use-package lua-mode
     :defer t
     :config
-    (push 'company-dabbrev company-backends-lua-mode)
-    (push 'company-etags company-backends-lua-mode)))
+    (progn
+      (push 'company-dabbrev company-backends-lua-mode)
+      (push 'company-etags company-backends-lua-mode)
+      (evil-leader/set-key-for-mode 'lua-mode
+        "mhi" 'helm-imenu
+        "mhd" 'helm-gtags-dwim
+        "mhr" 'helm-gtags-find-rtag
+        "mhs" 'helm-gtags-find-symbol
+        "mhf" 'helm-gtags-find-files))))
 
 
 (defun zilongshanren/post-init-company ()

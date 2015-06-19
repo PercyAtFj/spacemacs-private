@@ -67,6 +67,10 @@ Insert an Org link at point."
   (interactive)
   (org-map-entries 'org-archive-subtree "/DONE" 'file))
 
+(defun zilongshanren/org-archive-cancel-tasks ()
+  (interactive)
+  (org-map-entries 'org-archive-subtree "/CANCELLED" 'file))
+
 ;; when save a buffer, the directory is not exsits, it will ask you to create the directory
 (add-hook 'before-save-hook
           (lambda ()
@@ -478,3 +482,15 @@ org-files and bookmarks"
     (unless noinsert
       (insert output-string))
     output-string))
+
+;; insert date and time
+(defun zilongshanren/now ()
+  "Insert string for the current time formatted like '2:34 PM'."
+  (interactive)                 ; permit invocation in minibuffer
+  (insert (format-time-string "%D %-I:%M %p")))
+
+(defun zilongshanren/today ()
+  "Insert string for today's date nicely formatted in American style,
+e.g. Sunday, September 17, 2000."
+  (interactive)                 ; permit invocation in minibuffer
+  (insert (format-time-string "%A, %B %e, %Y")))
