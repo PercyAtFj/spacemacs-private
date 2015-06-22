@@ -44,3 +44,5 @@
 (define-key global-map (kbd "C-c r") 'org-capture)
 (define-key global-map (kbd "<f9>") 'org-capture)
 (evil-leader/set-key-for-mode 'org-mode  "mt" 'org-set-tags)
+(global-set-key (kbd "C-.") 'company-capf)
+

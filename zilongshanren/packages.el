@@ -52,10 +52,14 @@
       org-mac-link
       worf
       org-download
+      flycheck-package
       ))
 
 ;; List of packages to exclude.
 (setq zilongshanren-excluded-packages '())
+
+(defun zilongshanren/init-flycheck-package ()
+  (use-package flycheck-package))
 
 (defun zilongshanren/post-init-company-c-headers()
   (use-package company-c-headers
@@ -163,7 +167,9 @@
 (defun zilongshanren/post-init-flycheck ()
   (use-package flycheck
     :defer t
-    :config (setq flycheck-display-errors-delay 0.2)))
+    :config (progn
+              (flycheck-package-setup)
+              (setq flycheck-display-errors-delay 0.2))))
 
 (defun zilongshanren/init-helm-make ()
   (use-package helm-make
@@ -522,6 +528,8 @@ If `F.~REV~' already exists, use it instead of checking it out again."
     :defer t
     :init
     (progn
+      (require 'ace-pinyin)
+      (setq ace-pinyin-use-avy t)
       (setq avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
       (global-set-key (kbd "M-s") 'avy-goto-char-2)
       (evil-leader/set-key "SPC" 'avy-goto-char-2))))

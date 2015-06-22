@@ -235,7 +235,7 @@
                                             ("8zh" "@~chinese")
 
                                             ;; email
-                                            ("8me" "guanghui.qu@cocos2d-x.org")
+                                            ("8me" "guanghui8827@gmail.com")
 
                                             ;; computing tech
                                             ("8wp" "Wikipedia")
