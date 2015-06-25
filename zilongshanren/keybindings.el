@@ -46,3 +46,8 @@
 (evil-leader/set-key-for-mode 'org-mode  "mt" 'org-set-tags)
 (global-set-key (kbd "C-.") 'company-capf)
 
+
+;; some easy functions for navigate functions
+;;C-M-a beginning-of-defun
+;;C-M-e end-of-defun
+;;C-M-h mark-defun

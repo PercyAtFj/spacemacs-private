@@ -20,7 +20,7 @@
       company
       discover-my-major
       ws-butler
-      rtags
+      ;; rtags ;;very flow and difficult to configure
       cmake-font-lock
       ;; google-c-style
       cmake-mode
@@ -102,6 +102,7 @@
     (progn
       (push 'company-dabbrev company-backends-lua-mode)
       (push 'company-etags company-backends-lua-mode)
+      (add-hook 'lua-mode-hook 'evil-matchit-mode)
       (evil-leader/set-key-for-mode 'lua-mode
         "mhi" 'helm-imenu
         "mhd" 'helm-gtags-dwim
@@ -130,11 +131,19 @@
        (add-hook 'cython-mode-hook 'ws-butler-mode) 
         )))
 
-(defun zilongshanren/init-rtags ()
-  (use-package rtags
-    :init (require 'company-rtags)
-    :config
-    ))
+;; (defun zilongshanren/init-rtags ()
+;;   (use-package rtags
+;;     :init (require 'company-rtags)
+;;     :config
+;;     (progn
+;;       (evil-leader/set-key-for-mode 'c++-mode
+;;         "mtr" 'rtags-find-references
+;;         "mts" 'rtags-find-symbol
+;;         "mti" 'rtags-imenu
+;;         "mtf" 'rtags-find-file
+;;         "mtv" 'rtags-find-virtuals-at-point)
+;;       )
+;;     ))
 
 (defun zilongshanren/init-cmake-font-lock ()
   (use-package cmake-font-lock
@@ -613,7 +622,7 @@ If `F.~REV~' already exists, use it instead of checking it out again."
       ;; (evil-add-hjkl-bindings elfeed-show-mode-map 'emacs)
 
 
-      ;; (evil-add-hjkl-bindings package-menu-mode-map 'emacs)
+      (evil-add-hjkl-bindings package-menu-mode-map 'emacs)
       ;; (evil-add-hjkl-bindings Info-mode-map 'emacs)
 
       ;; Magit from avsej
