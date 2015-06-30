@@ -50,7 +50,7 @@
       evil
       ox-reveal
       org-mac-link
-      worf
+      ;; worf
       org-download
       flycheck-package
       ))
@@ -403,44 +403,45 @@
     :defer t
     :config
     (progn
-     ;; Githu PR settings
-     ;;http://endlessparentheses.com/easily-create-github-prs-from-magit.html
-     (defun endless/visit-pull-request-url ()
-       "Visit the current branch's PR on Github."
-       (interactive)
-       (browse-url
-        (format "https://github.com/%s/compare/%s"
-                (replace-regexp-in-string
-                 "\\`.+github\\.com:\\(.+\\)\\.git\\'" "\\1"
-                 (magit-get "remote"
-                            (magit-get-current-remote)
-                            "url"))
-                (magit-get-current-branch))))
+      ;; Githu PR settings
+      ;;http://endlessparentheses.com/easily-create-github-prs-from-magit.html
+      (defun endless/visit-pull-request-url ()
+        "Visit the current branch's PR on Github."
+        (interactive)
+        (browse-url
+         (format "https://github.com/%s/compare/%s"
+                 (replace-regexp-in-string
+                  "\\`.+github\\.com:\\(.+\\)\\.git\\'" "\\1"
+                  (magit-get "remote"
+                             (magit-get-current-remote)
+                             "url"))
+                 (magit-get-current-branch))))
 
-     (evilify magit-status-mode magit-status-mode-map
-              "V" 'endless/visit-pull-request-url)
+      (evilify magit-status-mode magit-status-mode-map
+               "V" 'endless/visit-pull-request-url)
 
-     (defadvice magit-blame-mode (after magit-blame-change-to-emacs-state activate compile)
-       "when entering magit blame mode, change evil normal state to emacs state"
-       (if (evil-normal-state-p)
-           (evil-emacs-state)
-         (evil-normal-state))
-       )
+      (defadvice magit-blame-mode (after magit-blame-change-to-emacs-state activate compile)
+        "when entering magit blame mode, change evil normal state to emacs state"
+        (if (evil-normal-state-p)
+            (evil-emacs-state)
+          (evil-normal-state))
+        )
 
-     (ad-activate 'magit-blame-mode)
+      (ad-activate 'magit-blame-mode)
 
-     (defadvice git-timemachine-mode (after git-timemachine-change-to-emacs-state activate compile)
-       "when entering git-timemachine mode, change evil normal state to emacs state"
-       (if (evil-normal-state-p)
-           (evil-emacs-state)
-         (evil-normal-state)))
+      (defadvice git-timemachine-mode (after git-timemachine-change-to-emacs-state activate compile)
+        "when entering git-timemachine mode, change evil normal state to emacs state"
+        (if (evil-normal-state-p)
+            (evil-emacs-state)
+          (evil-normal-state)))
 
-     (ad-activate 'git-timemachine-mode)
+      (ad-activate 'git-timemachine-mode)
 
-     (define-key magit-log-mode-map (kbd "W") 'magit-copy-item-as-kill)
-     (setq magit-process-popup-time 10)
-     (define-key magit-status-mode-map (kbd "C-j") 'magit-goto-next-sibling-section)
-     (define-key magit-status-mode-map (kbd "C-k") 'magit-goto-previous-sibling-section))))
+      (define-key magit-log-mode-map (kbd "W") 'magit-copy-item-as-kill)
+      (setq magit-process-popup-time 10)
+      (define-key magit-status-mode-map (kbd "C-j") 'magit-section-forward-sibling)
+      (define-key magit-status-mode-map (kbd "C-k") 'magit-section-backward-sibling)
+      )))
 
 (defun zilongshanren/post-init-git-messenger ()
   (use-package git-messenger
@@ -671,11 +672,11 @@ If `F.~REV~' already exists, use it instead of checking it out again."
       (setq org-reveal-root "file:///Users/guanghui/.emacs.d/reveal-js")
       )))
 
-(defun zilongshanren/init-worf ()
-  (use-package worf
-    :defer t
-    :init
-    (add-hook 'org-mode-hook 'worf-mode)))
+;; (defun zilongshanren/init-worf ()
+;;   (use-package worf
+;;     :defer t
+;;     :init
+;;     (add-hook 'org-mode-hook 'worf-mode)))
 
 (defun zilongshanren/init-org-download ()
   (use-package org-download
