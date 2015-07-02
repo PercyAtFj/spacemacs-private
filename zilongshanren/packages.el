@@ -404,21 +404,23 @@
     :config
     (progn
       ;; Githu PR settings
-      ;;http://endlessparentheses.com/easily-create-github-prs-from-magit.html
+      ;; "http://endlessparentheses.com/create-github-prs-from-emacs-with-magit.html"
       (defun endless/visit-pull-request-url ()
         "Visit the current branch's PR on Github."
         (interactive)
         (browse-url
-         (format "https://github.com/%s/compare/%s"
+         (format "https://github.com/%s/pull/new/%s"
                  (replace-regexp-in-string
                   "\\`.+github\\.com:\\(.+\\)\\.git\\'" "\\1"
                   (magit-get "remote"
-                             (magit-get-current-remote)
+                             (magit-get-remote)
                              "url"))
-                 (magit-get-current-branch))))
+                 (cdr (magit-get-remote-branch)))))
 
-      (evilify magit-status-mode magit-status-mode-map
-               "V" 'endless/visit-pull-request-url)
+      (eval-after-load 'magit
+        '(define-key magit-mode-map "v"
+           #'endless/visit-pull-request-url))
+
 
       (defadvice magit-blame-mode (after magit-blame-change-to-emacs-state activate compile)
         "when entering magit blame mode, change evil normal state to emacs state"
@@ -439,8 +441,8 @@
 
       (define-key magit-log-mode-map (kbd "W") 'magit-copy-item-as-kill)
       (setq magit-process-popup-time 10)
-      (define-key magit-status-mode-map (kbd "C-j") 'magit-section-forward-sibling)
-      (define-key magit-status-mode-map (kbd "C-k") 'magit-section-backward-sibling)
+      (define-key magit-status-mode-map (kbd "C-j") 'magit-section-forward)
+      (define-key magit-status-mode-map (kbd "C-k") 'magit-section-backward)
       )))
 
 (defun zilongshanren/post-init-git-messenger ()
