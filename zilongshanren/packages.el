@@ -441,8 +441,6 @@
 
       (define-key magit-log-mode-map (kbd "W") 'magit-copy-item-as-kill)
       (setq magit-process-popup-time 10)
-      (define-key magit-status-mode-map (kbd "C-j") 'magit-section-forward)
-      (define-key magit-status-mode-map (kbd "C-k") 'magit-section-backward)
       )))
 
 (defun zilongshanren/post-init-git-messenger ()
