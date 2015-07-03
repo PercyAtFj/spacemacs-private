@@ -1,4 +1,5 @@
 (spacemacs|defvar-company-backends lua-mode)
+(spacemacs|defvar-company-backends markdown-mode)
 
 (require 'dired-x)
 (require 'dired-aux)

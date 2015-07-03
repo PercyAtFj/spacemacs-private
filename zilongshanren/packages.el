@@ -27,14 +27,11 @@
       company-c-headers
       flycheck
       helm-make
-      helm-gtags
-      ggtags
       ycmd
       markdown-mode
       org-octopress
       impatient-mode
       ;; moz-controller
-      ;; youdao-dictionary
       helm-github-stars
       elfeed
       swiper
@@ -184,30 +181,6 @@
   (use-package helm-make
     :defer t))
 
-(defun gtags/init-ggtags ()
-  (use-package ggtags
-    :defer t))
-
-(defun zilongshanren/init-helm-gtags ()
-  (use-package helm-gtags
-    :diminish helm-gtags-mode
-    :init (progn
-            (add-hook 'c-mode-common-hook 'helm-gtags-mode)
-            (setq helm-gtags-ignore-case t
-                  helm-gtags-auto-update t
-                  helm-gtags-use-input-at-cursor t
-                  helm-gtags-pulse-at-cursor t))
-    :defer t
-    :config
-    (progn
-      (evil-leader/set-key-for-mode 'c++-mode
-        "mhi" 'helm-imenu
-        "mhd" 'helm-gtags-dwim
-        "mhr" 'helm-gtags-find-rtag
-        "mhs" 'helm-gtags-find-symbol
-        "mhf" 'helm-gtags-find-files)
-      )))
-
 (defun zilongshanren/post-init-ycmd ()
   (setq ycmd-tag-files 'atuo))
 
@@ -217,6 +190,7 @@
     :defer t
     :config
     (progn
+      (spacemacs|add-company-hook markdown-mode)
       (defun zilongshanren/markdown-to-html ()
         (interactive)
         (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name)
@@ -274,20 +248,6 @@
       (setq helm-github-stars-cache-file "~/.emacs.d/.cache/hgs-cache")
       )))
 
-(defun zilongshanren/init-youdao-dictionary ()
-  (use-package youdao-dictionary
-    :defer t
-    :config
-    (progn
-      ;; Enable Cache
-      (setq url-automatic-caching t)
-
-      ;; Set file path for saving search history
-      (setq youdao-dictionary-search-history-file "~/.emacs.d/.cache/.youdao")
-
-      ;; Enable Chinese word segmentation support (支持中文分词)
-      (setq youdao-dictionary-use-chinese-word-segmentation t)
-      )))
 
 (defun zilongshanren/init-elfeed ()
   (use-package elfeed
@@ -416,9 +376,10 @@
                              (magit-get-remote)
                              "url"))
                  (cdr (magit-get-remote-branch)))))
+      
 
       (eval-after-load 'magit
-        '(define-key magit-mode-map "v"
+        '(define-key magit-mode-map (kbd "s-g")
            #'endless/visit-pull-request-url))
 
 
@@ -439,8 +400,12 @@
 
       (ad-activate 'git-timemachine-mode)
 
-      (define-key magit-log-mode-map (kbd "W") 'magit-copy-item-as-kill)
+      (define-key magit-log-mode-map (kbd "W") 'magit-copy-as-kill)
       (setq magit-process-popup-time 10)
+      (define-key magit-status-mode-map (kbd "s-1") 'magit-jump-to-unstaged)
+      (define-key magit-status-mode-map (kbd "s-2") 'magit-jump-to-untracked)
+      (define-key magit-status-mode-map (kbd "s-3") 'magit-jump-to-staged)
+      (define-key magit-status-mode-map (kbd "s-4") 'magit-jump-to-stashes)
       )))
 
 (defun zilongshanren/post-init-git-messenger ()
