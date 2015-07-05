@@ -520,9 +520,7 @@ e.g. Sunday, September 17, 2000."
 
 (add-hook 'org-mode-hook '(lambda ()
                             ;; keybinding for editing source code blocks
-                            (local-set-key (kbd "C-c s e")
-                                           'org-edit-src-code)
                             ;; keybinding for inserting code blocks
-                            (local-set-key (kbd "C-c s i")
+                            (local-set-key (kbd "C-c i s")
                                            'org-insert-src-block)
                             ))
