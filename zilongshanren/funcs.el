@@ -368,32 +368,24 @@ Position the cursor at its beginning, according to the current mode."
     (sit-for 4)
     (browse-url "http://localhost:4000")))
 
-(defun hotspots ()
+(defun zilongshanren/hotspots ()
   "helm interface to my hotspots, which includes my locations,
 org-files and bookmarks"
   (interactive)
-  (helm :sources `(((name . "Mail and News")
-                    (candidates . (("Calendar" . (lambda ()  (browse-url "https://www.google.com/calendar/render")))
-                                   ;; ("Gmail" . (lambda() (mu4e)))
-                                   ("RSS" . elfeed)
-                                   ("Github" . (lambda() (helm-github-stars)))
-                                   ;; ("Writing" . (lambda()(olivetti-mode)))
-                                   ;; ("weibo" . (lambda()(weibo-timeline)))
-                                   ("Agenda" . (lambda () (org-agenda "" "a")))
-                                   ("sicp" . (lambda() (w3m-browse-url "http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-4.html#%_toc_start")))
-                                   ))
+  (helm :buffer "*helm: utities*"
+        :sources `(,(zilongshanren//hotspots-sources))))
 
-                    (action . (("Open" . (lambda (x) (funcall x))))))
-                   ((name . "My Locations")
-                    (candidates . ((".emacs.d" . "~/.emacs.d/init.el" )
-                                   ("blog" . "~/4gamers.cn/")
-                                   ("notes" . "~/org-notes/notes.org")
-                                   ))
-                    (action . (("Open" . (lambda (x) (find-file x))))))
-
-                   helm-source-recentf
-                   helm-source-bookmarks
-                   helm-source-bookmark-set)))
+(defun zilongshanren//hotspots-sources ()
+  "Construct the helm sources for my hotspots"
+  `((name . "Mail and News")
+   (candidates . (("Calendar" . (lambda ()  (browse-url "https://www.google.com/calendar/render")))
+                  ("RSS" . elfeed)
+                  ("Github" . (lambda() (helm-github-stars)))
+                  ("Calculator" . (lambda () (helm-calcul-expression)))
+                  ("Agenda" . (lambda () (org-agenda "" "a")))
+                  ("sicp" . (lambda() (browse-url "http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-4.html#%_toc_start")))))
+   (candidate-number-limit)
+   (action . (("Open" . (lambda (x) (funcall x)))))))
 
 (defun prelude-shift-left-visual ()
   "Shift left and restore visual selection."
@@ -505,3 +497,32 @@ e.g. Sunday, September 17, 2000."
       (let ((overlay (make-overlay (- (point) 5) (point))))
         (overlay-put overlay 'before-string (propertize "A"
                                                         'display '(left-fringe right-triangle)))))))
+
+;; http://wenshanren.org/?p=327
+;; change it to helm
+(defun org-insert-src-block (src-code-type)
+  "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
+  (interactive
+   (let ((src-code-types
+          '("emacs-lisp" "python" "C" "sh" "java" "js" "clojure" "C++" "css"
+            "calc" "asymptote" "dot" "gnuplot" "ledger" "lilypond" "mscgen"
+            "octave" "oz" "plantuml" "R" "sass" "screen" "sql" "awk" "ditaa"
+            "haskell" "latex" "lisp" "matlab" "ocaml" "org" "perl" "ruby"
+            "scheme" "sqlite")))
+     (list (ido-completing-read "Source code type: " src-code-types))))
+  (progn
+    (newline-and-indent)
+    (insert (format "#+BEGIN_SRC %s\n" src-code-type))
+    (newline-and-indent)
+    (insert "#+END_SRC\n")
+    (previous-line 2)
+    (org-edit-src-code)))
+
+(add-hook 'org-mode-hook '(lambda ()
+                            ;; keybinding for editing source code blocks
+                            (local-set-key (kbd "C-c s e")
+                                           'org-edit-src-code)
+                            ;; keybinding for inserting code blocks
+                            (local-set-key (kbd "C-c s i")
+                                           'org-insert-src-block)
+                            ))

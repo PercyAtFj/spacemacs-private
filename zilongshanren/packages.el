@@ -50,6 +50,8 @@
       ;; worf
       org-download
       flycheck-package
+      org
+      deft
       ))
 
 ;; List of packages to exclude.
@@ -546,10 +548,10 @@ If `F.~REV~' already exists, use it instead of checking it out again."
       (define-key evil-normal-state-map "[b" 'previous-buffer)
       (define-key evil-normal-state-map "]b" 'next-buffer)
       (define-key evil-normal-state-map (kbd ",/") 'evilnc-comment-or-uncomment-lines)
-      (define-key evil-normal-state-map (kbd ",ii") 'iimage-mode)
-      (define-key evil-normal-state-map (kbd "s-g") 'helm-ag-project-root)
-      (define-key evil-normal-state-map (kbd "s-f") 'ido-find-file)
-      (define-key evil-normal-state-map (kbd ",f") 'ff-find-other-file)
+      ;; (define-key evil-normal-state-map (kbd ",ii") 'iimage-mode)
+      ;; (define-key evil-normal-state-map (kbd "s-g") 'helm-ag-project-root)
+      ;; (define-key evil-normal-state-map (kbd "s-f") 'ido-find-file)
+      ;; (define-key evil-normal-state-map (kbd ",f") 'ff-find-other-file)
 
       (define-key evil-normal-state-map (kbd "[ SPC") 'zilongshanren/open-line-above)
       (define-key evil-normal-state-map (kbd "] SPC") 'zilongshanren/open-line-below)
@@ -648,3 +650,11 @@ If `F.~REV~' already exists, use it instead of checking it out again."
     :defer t
     :init
     (org-download-enable)))
+
+(defun zilongshanren/post-init-org ()
+  (spacemacs|add-company-hook org-mode))
+
+(defun zilongshanren/post-init-deft ()
+  (setq deft-use-filter-string-for-filename t)
+  (evil-leader/set-key-for-mode 'deft-mode
+    "mq" 'quit-window))

@@ -1,5 +1,6 @@
 (spacemacs|defvar-company-backends lua-mode)
 (spacemacs|defvar-company-backends markdown-mode)
+(spacemacs|defvar-company-backends org-mode)
 
 (require 'dired-x)
 (require 'dired-aux)
@@ -84,7 +85,7 @@
 ;; current subdir, instead of the current subdir of this dired buffer
 (setq dired-dwim-target t)
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+;; (global-set-key (kbd "C-x C-b") 'ibuffer)
 (evil-leader/set-key "bi" 'ibuffer)
 ;; when press c-d, the result is wrong.
 ;; (defadvice ido-find-file (after find-file-sudo activate)
