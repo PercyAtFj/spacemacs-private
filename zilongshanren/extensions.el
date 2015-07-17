@@ -32,6 +32,7 @@
       ))
   )
 
+;; https://atlanis.net/blog/posts/nodejs-repl-eval.html
 (defun zilongshanren/init-nodejs-repl-eval ()
   (use-package nodejs-repl-eval
     :init

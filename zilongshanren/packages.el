@@ -189,7 +189,7 @@
     :defer t))
 
 (defun zilongshanren/post-init-ycmd ()
-  (setq ycmd-tag-files 'atuo))
+  (setq ycmd-tag-files 'auto))
 
 ;; configs for writing
 (defun zilongshanren/post-init-markdown-mode ()
@@ -656,8 +656,15 @@ If `F.~REV~' already exists, use it instead of checking it out again."
     :init
     (org-download-enable)))
 
+;;In order to export pdf to support Chinese, I should install Latex at here: https://www.tug.org/mactex/
+;; http://freizl.github.io/posts/2012-04-06-export-orgmode-file-in-Chinese.html
 (defun zilongshanren/post-init-org ()
-  (spacemacs|add-company-hook org-mode))
+  (progn
+    (spacemacs|add-company-hook org-mode)
+    (setq org-latex-pdf-process
+          '("xelatex -interaction nonstopmode -output-directory %o %f"
+            "xelatex -interaction nonstopmode -output-directory %o %f"
+            "xelatex -interaction nonstopmode -output-directory %o %f"))))
 
 (defun zilongshanren/post-init-deft ()
   (setq deft-use-filter-string-for-filename t)
