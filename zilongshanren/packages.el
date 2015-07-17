@@ -52,10 +52,15 @@
       flycheck-package
       org
       deft
+      nodejs-repl
       ))
 
 ;; List of packages to exclude.
 (setq zilongshanren-excluded-packages '())
+
+(defun zilongshanren/init-nodejs-repl ()
+  (use-package nodejs-repl
+    :defer t))
 
 (defun zilongshanren/init-flycheck-package ()
   (use-package flycheck-package))

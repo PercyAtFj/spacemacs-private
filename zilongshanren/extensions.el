@@ -14,7 +14,7 @@
       '(
         ;; post extension names go here
         doxymacs
-        ;; eim
+        nodejs-repl-eval
         ))
 
 ;; For each extension, define a function zilongshanren/init-<extension-name>
@@ -31,27 +31,14 @@
       (add-hook 'c-mode-common-hook 'doxymacs-mode)
       ))
   )
-;;
-;; Often the body of an initialize function uses `use-package'
-;; For more info on `use-package', see readme:
-;; https://github.com/jwiegley/use-package
 
-;; (defun zilongshanren/init-eim ()
-;;     "Initialize eim"
-;;   (use-package eim
-;;     :init
-;;     (progn
-;;       (autoload 'eim-use-package "eim" "Another emacs input method")
-;;       ;; Tooltip 暂时还不好用
-;;       (setq eim-use-tooltip nil)
-
-;;       (register-input-method
-;;        "eim-wb" "euc-cn" 'eim-use-package
-;;        "五笔" "汉字五笔输入法" "wb.txt")
-;;       (register-input-method
-;;        "eim-py" "euc-cn" 'eim-use-package
-;;        "拼音" "汉字拼音输入法" "py.txt")
-;;       ;; 用 ; 暂时输入英文
-;;       (require 'eim-extra)
-;;       (global-set-key ";" 'eim-insert-ascii)
-;;       )))
+(defun zilongshanren/init-nodejs-repl-eval ()
+  (use-package nodejs-repl-eval
+    :init
+    (use-package js2-mode
+      :defer t
+      :config
+      (define-key js2-mode-map (kbd "C-x C-e") 'nodejs-repl-eval-dwim)
+      (evil-leader/set-key-for-mode 'js2-mode
+        "msd" 'nodejs-repl-eval-dwim)
+      )))
