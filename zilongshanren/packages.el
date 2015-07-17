@@ -525,15 +525,9 @@ If `F.~REV~' already exists, use it instead of checking it out again."
       )))
 
 
-;; For each package, define a function zilongshanren/init-<package-zilongshanren>
-;;
+;;configs for EVIL mode
 (defun zilongshanren/post-init-evil ()
-  "Initialize evil"
   (use-package evil
-    :init
-    (
-
-     )
     :defer t
     :config
     (progn
@@ -544,19 +538,9 @@ If `F.~REV~' already exists, use it instead of checking it out again."
       (defadvice evil-ex-search-previous (after advice-for-evil-search-previous activate)
         (evil-scroll-line-to-center (line-number-at-pos)))
 
-      ;; (setq evil-search-module 'evil-search)
-      ;; (define-key evil-normal-state-map "n" 'evil-ex-search-next)
-      ;; (define-key evil-normal-state-map "N" 'evil-ex-search-previous)
-      ;; (define-key evil-normal-state-map "*" 'evil-ex-search-word-forward)
-      ;; (define-key evil-normal-state-map "#" 'evil-ex-search-word-backward)
-      ;; (define-key evil-normal-state-map "/" 'evil-ex-search-forward)
       (define-key evil-normal-state-map "[b" 'previous-buffer)
       (define-key evil-normal-state-map "]b" 'next-buffer)
       (define-key evil-normal-state-map (kbd ",/") 'evilnc-comment-or-uncomment-lines)
-      ;; (define-key evil-normal-state-map (kbd ",ii") 'iimage-mode)
-      ;; (define-key evil-normal-state-map (kbd "s-g") 'helm-ag-project-root)
-      ;; (define-key evil-normal-state-map (kbd "s-f") 'ido-find-file)
-      ;; (define-key evil-normal-state-map (kbd ",f") 'ff-find-other-file)
 
       (define-key evil-normal-state-map (kbd "[ SPC") 'zilongshanren/open-line-above)
       (define-key evil-normal-state-map (kbd "] SPC") 'zilongshanren/open-line-below)
@@ -587,34 +571,9 @@ If `F.~REV~' already exists, use it instead of checking it out again."
       (define-key evil-visual-state-map (kbd "X") 'er/contract-region)
       (define-key evil-visual-state-map (kbd "C-r") 'zilongshanren/evil-quick-replace)
 
-      ;; (evil-add-hjkl-bindings ibuffer-mode-map 'emacs)
-      ;; (evil-add-hjkl-bindings org-agenda-mode-map 'emacs)
-      ;; (evil-add-hjkl-bindings dired-mode-map 'emacs)
-      ;; (evil-add-hjkl-bindings help-mode-map 'emacs)
-      ;; (evil-add-hjkl-bindings elfeed-search-mode-map 'emacs)
-      ;; (evil-add-hjkl-bindings elfeed-show-mode-map 'emacs)
-
-
+      ;; in spacemacs, we always use evilify miscro state
       (evil-add-hjkl-bindings package-menu-mode-map 'emacs)
-      ;; (evil-add-hjkl-bindings Info-mode-map 'emacs)
 
-      ;; Magit from avsej
-      ;;
-      ;; (evil-add-hjkl-bindings magit-log-mode-map 'emacs)
-      ;; (evil-add-hjkl-bindings occur-mode-map 'emacs)
-      ;; (evil-add-hjkl-bindings magit-commit-mode-map 'emacs)
-      ;; (evil-add-hjkl-bindings magit-branch-manager-mode-map 'emacs
-      ;;   "K" 'magit-discard-item
-      ;;   "L" 'magit-key-mode-popup-logging)
-      ;; (evil-add-hjkl-bindings magit-status-mode-map 'emacs
-      ;;   "K" 'magit-discard-item
-      ;;   "l" 'magit-key-mode-popup-logging
-      ;;   "h" 'magit-toggle-diff-refine-hunk)
-
-      ;; Evil Emacs state map
-      ;; (define-key evil-emacs-state-map "[b" 'previous-buffer)
-      ;; (define-key evil-emacs-state-map "]b" 'next-buffer)
-      ;; define c-w h,j,k,l to window movement in evil-eamcs mode
       (define-key evil-emacs-state-map (kbd "C-w h") 'evil-window-left)
       (define-key evil-emacs-state-map (kbd "C-w j") 'evil-window-down)
       (define-key evil-emacs-state-map (kbd "C-w k") 'evil-window-up)
@@ -632,7 +591,7 @@ If `F.~REV~' already exists, use it instead of checking it out again."
 (defun zilongshanren/init-org-mac-link ()
   (use-package org-mac-link
     :init
-    (add-hook 'org-mode-hook (lambda () 
+    (add-hook 'org-mode-hook (lambda ()
                                (define-key org-mode-map (kbd "C-c g") 'org-mac-grab-link)))))
 
 
