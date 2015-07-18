@@ -677,7 +677,23 @@ If `F.~REV~' already exists, use it instead of checking it out again."
             "xelatex -interaction nonstopmode -output-directory %o %f"
             "rm -fr %b.out %b.log %b.tex auto"))
 
-    (setq org-latex-listings t)))
+    (setq org-latex-listings t)
+    ;; improve org babel
+
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '( (perl . t)
+        (ruby . t)
+        (sh . t)
+        (python . t)
+        (emacs-lisp . t)
+        (C . t)
+        (R . t)
+        (ditaa . t)))
+
+    (evil-leader/set-key-for-mode 'org-mode
+      "mBc" 'org-babel-remove-result)
+    ))
 
 (defun zilongshanren/post-init-deft ()
   (setq deft-use-filter-string-for-filename t)
