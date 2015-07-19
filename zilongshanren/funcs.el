@@ -274,87 +274,51 @@ Position the cursor at its beginning, according to the current mode."
              chinese-char chinese-char-and-punc english-word
              (+ chinese-char english-word)))))
 
-(setq octopress-workdir (expand-file-name "~/4gamers.cn/"))
 
 (require 'ido)
 
-(setq octopress-posts (concat octopress-workdir "source/_posts/"))
+(setq octopress-workdir (expand-file-name "~/4gamers.cn/"))
 
-(defun octopress-rake (command)
+(defun zilongshanren/octopress-rake (command)
   "run rake commands"
   (let ((command-str (format "/bin/bash -l -c 'source $HOME/.rvm/scripts/rvm && rvm use ruby 2.0.0  && cd %s && rake %s'" octopress-workdir command)))
     (shell-command-to-string command-str)))
 
-(defun octopress-qrsync (command)
+(defun zilongshanren/octopress-qrsync (command)
   (let ((command-str (format "/usr/local/bin/qrsync %s" command )))
     (shell-command-to-string command-str)))
 
-
-(defun octopress-new (class title)
-  (let* ((command-str (format "new_%s[\"%s\"]" class title))
-         (command-result (octopress-rake command-str))
-         (regexp-str (format "Creating new %s: " class))
-         (filename))
-    (progn
-      (setq filename (concat octopress-workdir "/"
-                             (replace-regexp-in-string regexp-str ""
-                                                       (car (cdr (reverse (split-string command-result "\n")))))))
-      (find-file filename))))
-
-(defun octopress-new-post (title)
-  "begin a new post in source/_posts"
-  (interactive "MTitle: ")
-  (octopress-new "post" title))
-
-(defun octopress-new-page (title)
-  "create a new page in source/(filename)/index.markdown"
-  (interactive "MTitle: ")
-  (octopress-new "page" title))
-
-(defun octopress-generate ()
+(defun zilongshanren/octopress-generate ()
   "generate jekyll site"
   (interactive)
-  (octopress-rake "generate")
+  (zilongshanren/octopress-rake "generate")
   (message "Generate site OK"))
 
-(defun octopress-deploy ()
+(defun zilongshanren/octopress-deploy ()
   "default deploy task"
   (interactive)
-  (octopress-rake "deploy")
-  ;; (octopress-qrsync "/Users/venmos/.script/venmos-com.json")
+  (zilongshanren/octopress-rake "deploy")
+  (zilongshanren/octopress-qrsync "/Users/guanghui/4gamers.cn/guanghui.json")
   (message "Deploy site OK"))
 
-(defun octopress-gen-deploy ()
+(defun zilongshanren/octopress-gen-deploy ()
   "generate website and deploy"
   (interactive)
-  (octopress-rake "gen_deploy")
-  ;; (octopress-qrsync "/Users/venmos/.script/venmos-com.json")
+  (zilongshanren/octopress-rake "gen_deploy")
+  (zilongshanren/octopress-qrsync "/Users/guanghui/4gamers.cn/guanghui.json")
   (message "Generate and Deploy OK"))
 
-(defun octopress-posts ()
-  "use ack to search  your posts"
+(defun zilongshanren/octopress-upimg ()
   (interactive)
-  (octopress-posts (ido-find-file-in-dir octopress-posts)))
-
-(defun octopress-dired ()
-  (interactive)
-  (octopress-dired (find-file octopress-posts)))
-
-(defun octopress-shell ()
-  (interactive)
-  (octopress-shell (load-file preview-macs)))
-
-(defun octopress-upimg ()
-  (interface)
-  (octopress-qrsync "/Users/venmos/.script/venmos-com.json")
-  (messenge "Up Img to Qiniu"))
+  (zilongshanren/octopress-qrsync "/Users/guanghui/4gamers.cn/guanghui.json")
+  (message "Up Img to Qiniu"))
 
 (defun directory-parent (directory)
   (let ((parent (file-name-directory (directory-file-name directory))))
     (if (not (equal directory parent))
         parent)))
 
-(defun jekyll-serve ()
+(defun zilongshanren/jekyll-serve ()
   (interactive)
   (let* ((default-directory
            (if (string-match "_posts/$" default-directory)
@@ -500,7 +464,7 @@ e.g. Sunday, September 17, 2000."
 
 ;; http://wenshanren.org/?p=327
 ;; change it to helm
-(defun org-insert-src-block (src-code-type)
+(defun zilongshanren/org-insert-src-block (src-code-type)
   "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
   (interactive
    (let ((src-code-types
@@ -522,5 +486,37 @@ e.g. Sunday, September 17, 2000."
                             ;; keybinding for editing source code blocks
                             ;; keybinding for inserting code blocks
                             (local-set-key (kbd "C-c i s")
-                                           'org-insert-src-block)
+                                           'zilongshanren/org-insert-src-block)
                             ))
+
+;; Screenshot
+(defun zilongshanren//insert-org-or-md-img-link (prefix imagename)
+  (if (equal (file-name-extension (buffer-file-name)) "org")
+      (insert (format "[[%s][%s%s]]" imagename prefix imagename))
+    (insert (format "![%s](%s%s)" imagename prefix imagename))))
+
+(defun zilongshanren/capture-screenshot (basename)
+  "Take a screenshot into a time stamped unique-named file in the
+  same directory as the org-buffer/markdown-buffer and insert a link to this file."
+  (interactive "sScreenshot name: ")
+  (if (equal basename "")
+      (setq basename (format-time-string "%Y%m%d_%H%M%S")))
+  (setq fullpath
+        (concat (file-name-directory (buffer-file-name))
+                "../images/posts/"
+                (file-name-base (buffer-file-name))
+                "_"
+                basename))
+  (setq relativepath
+        (concat (file-name-base (buffer-file-name))
+                "_"
+                basename
+                ".png"))
+  (if (file-exists-p (file-name-directory fullpath))
+      (progn
+        (call-process "screencapture" nil nil nil "-s" (concat fullpath ".png"))
+        (zilongshanren//insert-org-or-md-img-link "http://guanghuiqu.qiniudn.com/" relativepath))
+    (progn
+      (call-process "screencapture" nil nil nil "-s" (concat basename ".png"))
+      (zilongshanren//insert-org-or-md-img-link "./" (concat basename ".png"))))
+  (insert "\n"))

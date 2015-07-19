@@ -91,7 +91,7 @@
     :defer t
     :diminish (lispy-mode)
     :init
-    (progn 
+    (progn
       (add-hook 'emacs-lisp-mode-hook (lambda ()(lispy-mode 1)))
       (add-hook 'spacemacs-mode-hook (lambda () (lispy-mode 1)))
       (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1)))
@@ -132,7 +132,7 @@
       (progn
        (add-hook 'c-mode-common-hook 'ws-butler-mode)
        (add-hook 'python-mode-hook 'ws-butler-mode)
-       (add-hook 'cython-mode-hook 'ws-butler-mode) 
+       (add-hook 'cython-mode-hook 'ws-butler-mode)
         )))
 
 ;; (defun zilongshanren/init-rtags ()
@@ -217,11 +217,11 @@
   (use-package org-octopress
     :init
     (progn
-      (setq org-octopress-directory-top       "~/myblog/octopress/source")
-    (setq org-octopress-directory-posts     "~/myblog/octopress/source/_posts")
-    (setq org-octopress-directory-org-top   "~/myblog/octopress/source")
-    (setq org-octopress-directory-org-posts "~/myblog/octopress/source/blog")
-    (setq org-octopress-setup-file          "~/myblog/octopress/setupfile.org")
+      (setq org-octopress-directory-top       "~/4gamers.cn/source")
+      (setq org-octopress-directory-posts     "~/4gamers.cn/source/_posts")
+      (setq org-octopress-directory-org-top   "~/4gamers.cn/source")
+      (setq org-octopress-directory-org-posts "~/4gamers.cn/source/blog")
+      (setq org-octopress-setup-file          "~/4gamers.cn/setupfile.org")
       )))
 
 (defun zilongshanren/init-impatient-mode ()
@@ -383,7 +383,7 @@
                              (magit-get-remote)
                              "url"))
                  (cdr (magit-get-remote-branch)))))
-      
+
 
       (eval-after-load 'magit
         '(define-key magit-mode-map (kbd "s-g")
@@ -693,6 +693,7 @@ If `F.~REV~' already exists, use it instead of checking it out again."
 
     (evil-leader/set-key-for-mode 'org-mode
       "mBc" 'org-babel-remove-result)
+
     ))
 
 (defun zilongshanren/post-init-deft ()
