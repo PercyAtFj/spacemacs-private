@@ -217,6 +217,9 @@
   (use-package org-octopress
     :init
     (progn
+      (evilify org-octopress-summary-mode org-octopress-summary-mode-map)
+      (add-hook 'org-octopress-summary-mode-hook
+                #'(lambda () (local-set-key (kbd "q") 'bury-buffer)))
       (setq org-octopress-directory-top       "~/4gamers.cn/source")
       (setq org-octopress-directory-posts     "~/4gamers.cn/source/_posts")
       (setq org-octopress-directory-org-top   "~/4gamers.cn/source")

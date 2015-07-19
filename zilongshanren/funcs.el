@@ -344,6 +344,7 @@ org-files and bookmarks"
   `((name . "Mail and News")
    (candidates . (("Calendar" . (lambda ()  (browse-url "https://www.google.com/calendar/render")))
                   ("RSS" . elfeed)
+                  ("Blog" . org-octopress)
                   ("Github" . (lambda() (helm-github-stars)))
                   ("Calculator" . (lambda () (helm-calcul-expression)))
                   ("Agenda" . (lambda () (org-agenda "" "a")))
