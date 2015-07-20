@@ -18,7 +18,7 @@
         ))
 
 (setq zilongshanren-pre-extensions
-      '(ess-site))
+      '())
 
 ;; For each extension, define a function zilongshanren/init-<extension-name>
 ;;
@@ -46,7 +46,3 @@
       (evil-leader/set-key-for-mode 'js2-mode
         "msd" 'nodejs-repl-eval-dwim)
       )))
-
-(defun zilongshanren/init-ess-site ()
-  (use-package ess-site
-    ))
