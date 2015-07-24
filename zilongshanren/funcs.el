@@ -366,21 +366,21 @@ org-files and bookmarks"
   (evil-normal-state)
   (evil-visual-restore))
 
-(defun zilongshanren/open-line-above()
-  "open an empty line above the current line"
-  (interactive)
-  (save-excursion
-    (evil-open-above 1)
-    (evil-normal-state)
-    ))
+;; (defun zilongshanren/open-line-above()
+;;   "open an empty line above the current line"
+;;   (interactive)
+;;   (save-excursion
+;;     (evil-open-above 1)
+;;     (evil-normal-state)
+;;     ))
 
-(defun zilongshanren/open-line-below()
-  "open an empty line below the current line"
-  (interactive)
-  (save-excursion
-    (evil-open-below 1)
-    (evil-normal-state))
-  )
+;; (defun zilongshanren/open-line-below()
+;;   "open an empty line below the current line"
+;;   (interactive)
+;;   (save-excursion
+;;     (evil-open-below 1)
+;;     (evil-normal-state))
+;;   )
 
 (defun zilongshanren/yank-to-end-of-line ()
   "Yank to end of line."

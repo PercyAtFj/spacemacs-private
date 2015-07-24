@@ -116,13 +116,11 @@
 
 
 (defun zilongshanren/post-init-company ()
-  (use-package company
-    :defer t
-    :config
     (setq company-minimum-prefix-length 1)
     (global-set-key (kbd "C-.") 'company-complete)
     (spacemacs|add-company-hook lua-mode)
-    ))
+    (spacemacs|add-company-hook nxml-mode)
+    )
 
 
 (defun zilongshanren/init-ws-butler ()
@@ -541,12 +539,7 @@ If `F.~REV~' already exists, use it instead of checking it out again."
       (defadvice evil-ex-search-previous (after advice-for-evil-search-previous activate)
         (evil-scroll-line-to-center (line-number-at-pos)))
 
-      (define-key evil-normal-state-map "[b" 'previous-buffer)
-      (define-key evil-normal-state-map "]b" 'next-buffer)
       (define-key evil-normal-state-map (kbd ",/") 'evilnc-comment-or-uncomment-lines)
-
-      (define-key evil-normal-state-map (kbd "[ SPC") 'zilongshanren/open-line-above)
-      (define-key evil-normal-state-map (kbd "] SPC") 'zilongshanren/open-line-below)
 
       (define-key evil-normal-state-map
         (kbd "Y") 'zilongshanren/yank-to-end-of-line)
@@ -624,7 +617,10 @@ If `F.~REV~' already exists, use it instead of checking it out again."
 (defun zilongshanren/post-init-org ()
   (progn
     (spacemacs|add-company-hook org-mode)
-
+    (evil-leader/set-key-for-mode 'org-mode
+      "." 'org-agenda
+      "mls" 'org-store-link
+      "mli" 'org-insert-link)
     (require 'ox-publish)
     (add-to-list 'org-latex-classes '("ctexart" "\\documentclass[11pt]{ctexart}
                                         [NO-DEFAULT-PACKAGES]

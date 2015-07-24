@@ -1,6 +1,7 @@
 (spacemacs|defvar-company-backends lua-mode)
 (spacemacs|defvar-company-backends markdown-mode)
 (spacemacs|defvar-company-backends org-mode)
+(spacemacs|defvar-company-backends nxml-mode)
 
 (require 'dired-x)
 (require 'dired-aux)
@@ -376,3 +377,6 @@ Single Capitals as you type."
   (if dubcaps-mode
       (add-hook 'post-self-insert-hook #'dcaps-to-scaps nil 'local)
     (remove-hook 'post-self-insert-hook #'dcaps-to-scaps 'local)))
+
+(add-to-list 'auto-mode-alist (cons (concat "\\." (regexp-opt '("xml" "xsd" "rng" "xslt" "xsl") t) "\\'") 'nxml-mode))
+(setq nxml-slash-auto-complete-flag t)
