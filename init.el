@@ -18,7 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-        ;; --------------------------------------------------------
+     ;; --------------------------------------------------------
      ;; Example of useful layers you may want to use right away
      ;; Uncomment a layer name and press C-c C-c to install it
      ;;  Guide key
@@ -40,7 +40,7 @@ values."
      ;; (ruby :variables ruby-version-manager 'rvm)
      python
      ;; lua
-     ;; (clojure :variables clojure-enable-fancify-symbols t)
+     clojure
      html
      javascript
      restclient
@@ -48,6 +48,7 @@ values."
      dash
      emoji
      ycmd
+     fasd
      ;; deft
      racket
      gtags
@@ -67,15 +68,20 @@ values."
      (chinese :variables chinese-default-input-method 'wubi
               chinese-enable-youdao-dict t)
      zilongshanren
+     guanghui
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
-   ;; configuration in `dotspacemacs/config'.
+   ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(magit-gh-pulls
                                     magit-gitflow
+                                    evil-mc
+                                    ;;At first, I should disable hydra in zilongshanren layer and install clj-refactor, after it is installed.
+                                    ;; I could re-enable it again in zilongshanren layer.
+                                    ;; clj-refactor
                                     ;;remove from spacemacs distribution
                                     ;; neotree
                                     leuven-theme
@@ -170,7 +176,7 @@ values."
    ;; `find-files' (SPC f f), `find-spacemacs-file' (SPC f e s), and
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
    dotspacemacs-use-ido nil
-   ;; If non nil, `helm' will try to miminimize the space it uses. (default nil)
+   ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
    dotspacemacs-helm-resize nil
    ;; if non nil, the helm header is hidden when there is only one source.
    ;; (default nil)
@@ -247,8 +253,6 @@ user code."
 
   ;; ss proxy. But it will cause anacond-mode failed.
   (setq socks-server '("Default server" "127.0.0.1" 1080 5))
-  ;;I have changed this settings to shadowsocks minor mode
-  ;; (setq url-gateway-method 'socks)
   )
 
 (defun dotspacemacs/user-config ()
@@ -256,43 +260,15 @@ user code."
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
 
-  (add-hook 'prog-mode-hook #'linum-mode)
-  (with-eval-after-load 'linum
-    (linum-relative-mode))
-
-
   ;;解决org表格里面中英文对齐的问题
   (when (configuration-layer/layer-usedp 'chinese)
     (when (spacemacs/system-is-mac)
       (spacemacs//set-monospaced-font "Source Code Pro" "Hiragino Sans GB" 14 16)))
 
   (global-company-mode t)
-
-  ;;currently this key map must be put in user-config to override the defaults
-  (evil-leader/set-key "pf" 'helm-ls-git-ls)
-
-  ;; (define-key js2-mode-map (kbd "C-x C-e") 'nodejs-repl-eval-dwim)
-
-  (when (configuration-layer/layer-usedp 'vinegar)
-    (evilify dired-mode dired-mode-map
-             (kbd "C-k") 'zilongshanren/dired-up-directory
-             (kbd "C") 'dired-do-copy))
-
-  (setq company-backends-web-mode '((company-dabbrev-code
-                                     company-keywords
-                                     company-etags)
-                                    company-files company-dabbrev))
-
-  (spacemacs|defvar-company-backends sh-mode)
-  (spacemacs|add-company-hook sh-mode)
-
-  (setq company-backends-c-mode-common '((company-c-headers
-                                          company-dabbrev-code
-                                          company-keywords
-                                          company-etags
-                                          company-gtags :with company-yasnippet)
-                                         company-files company-dabbrev ))
+  (setq-default powerline-default-separator 'arrow)
   )
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
@@ -344,8 +320,7 @@ layers configuration."
  '(vc-follow-symlinks t)
  '(web-mode-markup-indent-offset 2)
  '(ycmd-extra-conf-handler (quote load))
- '(ycmd-extra-conf-whitelist (quote ("~/cocos2d-x/*")))
- '(ycmd-parse-conditions (quote (save new-line idle-change mode-enabled))))
+ '(ycmd-extra-conf-whitelist (quote ("~/cocos2d-x/*"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -358,6 +333,7 @@ layers configuration."
  '(git-gutter-fr:added ((t (:foreground "#859900" :weight bold :width extra-expanded))))
  '(helm-ls-git-modified-and-staged-face ((t (:foreground "dark cyan"))))
  '(helm-ls-git-modified-not-staged-face ((t (:foreground "dark cyan"))))
- '(helm-ls-git-renamed-modified-face ((t (:foreground "dark cyan")))))
+ '(helm-ls-git-renamed-modified-face ((t (:foreground "dark cyan"))))
+ '(sp-show-pair-match-face ((t (:background "#272822" :foreground "gray" :inverse-video t :weight normal)))))
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

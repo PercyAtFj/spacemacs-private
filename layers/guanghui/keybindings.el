@@ -16,7 +16,7 @@
 (require 'dired)
 (define-key dired-mode-map (kbd "<mouse-2>") 'my-dired-find-file)
 
-(define-key dired-mode-map "r" 'dired-start-process)
+;; (define-key dired-mode-map "r" 'dired-start-process)
 (define-key dired-mode-map "E" 'dired-toggle-read-only)
 
 (define-key dired-mode-map (kbd "`") 'dired-open-term)
@@ -75,11 +75,11 @@
  (evil-leader/set-key "o!" 'zilongshanren/iterm-shell-command))
 
 (spacemacs|add-toggle toggle-shadowsocks-proxy-mode
-    :status shadowsocks-proxy-mode
-    :on (global-shadowsocks-proxy-mode)
-    :off (global-shadowsocks-proxy-mode -1)
-    :documentation "Toggle shadowsocks proxy mode."
-    :evil-leader "toP")
+  :status shadowsocks-proxy-mode
+  :on (global-shadowsocks-proxy-mode)
+  :off (global-shadowsocks-proxy-mode -1)
+  :documentation "Toggle shadowsocks proxy mode."
+  :evil-leader "ots")
 
 (global-set-key (kbd "s-s") 'save-buffer)
 (bind-key* "s-k" 'scroll-other-window-down)
@@ -91,3 +91,6 @@
 (bind-key* "s-;" 'zilongshanren/insert-semicolon-at-the-end-of-this-line)
 
 (bind-key* "s-," 'zilongshanren/insert-comma-at-the-end-of-this-line)
+
+(bind-key* "C-=" 'er/expand-region)
+
